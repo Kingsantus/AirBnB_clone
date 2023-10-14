@@ -130,10 +130,10 @@ class HBNBCommand(cmd.Cmd):
         <attribute name>, <attribute value>), and 
         <class name>.update(<id>, <dictionary representation>)
         """
-        if '.' in line:
-            parts = line.split('.')
+        if "." in line:
+            parts = line.split(".")
             class_name = parts[0]
-            command = parts[1]
+            command = parts[1].strip()
             if command == "all()":
                 if class_name in self.__classes:
                     self.do_all(class_name)
@@ -141,26 +141,40 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
             elif command == "count()":
                 if class_name in self.__classes:
-                    count = sum(1 for key in models.storage.all() if key.startswith(class_name + "."))
+                    count = sum(
+                        1
+                        for key in models.storage.all()
+                        if key.startswith(class_name + ".")
+                    )
                     print(count)
                 else:
                     print("** class doesn't exist **")
-            elif parts[1].startswith("show(") and parts[1].endswith(")"):
+            elif command.startswith("show(") and command.endswith(")"):
                 if class_name in self.__classes:
-                    show_id = parts[1][parts[1].find("(")+1:parts[1].find(")")]
+                    show_id = command[command.find("(") + 1 : command.find(")")]
+                    if show_id.startswith('"') and show_id.endswith('"'):
+                        show_id = show_id[1:-1]
                     self.do_show(f"{class_name} {show_id}")
                 else:
                     print("** class doesn't exist **")
-            elif parts[1].startswith("destroy(") and parts[1].endswith(")"):
+            elif command.startswith("destroy(") and command.endswith(")"):
                 if class_name in self.__classes:
-                    destroy_id = parts[1][parts[1].find("(")+1:parts[1].find(")")]
+                    destroy_id = command[command.find("(") + 1 : command.find(")")]
+                    if destroy_id.startswith('"') and destroy_id.endswith('"'):
+                        destroy_id = destroy_id[1:-1]
                     self.do_destroy(f"{class_name} {destroy_id}")
                 else:
                     print("** class doesn't exist **")
-            elif parts[1].startswith("update(") and parts[1].endswith(")"):
+            elif command.startswith("update(") and command.endswith(")"):
                 if class_name in self.__classes:
-                    update_args = parts[1][parts[1].find("(") + 1:parts[1].rfind(")")].split(", ")
-                    if len(update_args) == 2 and "{" in update_args[1] and "}" in update_args[1]:
+                    update_args = command[command.find("(") + 1 : command.rfind(")")].split(
+                        ", "
+                    )
+                    if (
+                        len(update_args) == 2
+                        and "{" in update_args[1]
+                        and "}" in update_args[1]
+                    ):
                         update_id = update_args[0]
                         dictionary_rep = eval(update_args[1])
                         for key, value in dictionary_rep.items():
