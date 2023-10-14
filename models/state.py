@@ -4,7 +4,7 @@ import models
 from models.base_model import BaseModel
 
 class State(BaseModel):
-    """State class that handle state name inherit frpm BaseModel"""
+    """State class that handle state name inherit from BaseModel"""
     name = ""
 
     def __init__(self, *args, **kwargs):
