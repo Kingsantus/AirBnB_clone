@@ -123,13 +123,59 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def default(self, line):
-        """Handle commands in the format of <class name>.all()"""
-        if '.' in line and line.split('.')[1] == "all()":
-            class_name = line.split('.')[0]
-            if class_name in self.__classes:
-                self.do_all(class_name)
+        """Handle commands in the format of <class name>.all(), 
+        <class name>.count(), <class name>.show(<id>), 
+        <class name>.destroy(<id>), 
+        <class name>.update(<id>, 
+        <attribute name>, <attribute value>), and 
+        <class name>.update(<id>, <dictionary representation>)
+        """
+        if '.' in line:
+            parts = line.split('.')
+            class_name = parts[0]
+            command = parts[1]
+            if command == "all()":
+                if class_name in self.__classes:
+                    self.do_all(class_name)
+                else:
+                    print("** class doesn't exist **")
+            elif command == "count()":
+                if class_name in self.__classes:
+                    count = sum(1 for key in models.storage.all() if key.startswith(class_name + "."))
+                    print(count)
+                else:
+                    print("** class doesn't exist **")
+            elif parts[1].startswith("show(") and parts[1].endswith(")"):
+                if class_name in self.__classes:
+                    show_id = parts[1][parts[1].find("(")+1:parts[1].find(")")]
+                    self.do_show(f"{class_name} {show_id}")
+                else:
+                    print("** class doesn't exist **")
+            elif parts[1].startswith("destroy(") and parts[1].endswith(")"):
+                if class_name in self.__classes:
+                    destroy_id = parts[1][parts[1].find("(")+1:parts[1].find(")")]
+                    self.do_destroy(f"{class_name} {destroy_id}")
+                else:
+                    print("** class doesn't exist **")
+            elif parts[1].startswith("update(") and parts[1].endswith(")"):
+                if class_name in self.__classes:
+                    update_args = parts[1][parts[1].find("(") + 1:parts[1].rfind(")")].split(", ")
+                    if len(update_args) == 2 and "{" in update_args[1] and "}" in update_args[1]:
+                        update_id = update_args[0]
+                        dictionary_rep = eval(update_args[1])
+                        for key, value in dictionary_rep.items():
+                            self.do_update(f"{class_name} {update_id} {key} {value}")
+                    elif len(update_args) >= 3:
+                        update_id = update_args[0]
+                        attr_name = update_args[1]
+                        attr_value = update_args[2]
+                        self.do_update(f"{class_name} {update_id} {attr_name} {attr_value}")
+                    else:
+                        print("** incorrect format for dictionary representation **")
+                else:
+                    print("** class doesn't exist **")
             else:
-                print("** class doesn't exist **")
+                super().default(line)
         else:
             super().default(line)
 
