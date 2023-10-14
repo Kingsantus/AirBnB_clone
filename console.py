@@ -122,5 +122,16 @@ class HBNBCommand(cmd.Cmd):
         """Called when an empty line is entered in response to the prompt."""
         pass
 
+    def default(self, line):
+        """Handle commands in the format of <class name>.all()"""
+        if '.' in line and line.split('.')[1] == "all()":
+            class_name = line.split('.')[0]
+            if class_name in self.__classes:
+                self.do_all(class_name)
+            else:
+                print("** class doesn't exist **")
+        else:
+            super().default(line)
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
