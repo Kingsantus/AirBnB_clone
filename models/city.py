@@ -5,7 +5,7 @@ import models
 from models.base_model import BaseModel
 
 class City(BaseModel):
-"""This is the city class which controls info inheriting from the BaseModel"""
+    """This is the city class which controls info inheriting from the BaseModel"""
     state_id = ""
     name = ""
 
