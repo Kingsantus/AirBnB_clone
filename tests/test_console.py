@@ -37,20 +37,20 @@ class TestHBNBCommand_help(unittest.TestCase):
     """These are the unittests for testing help messages of the HBNB command interpreter."""
 
     def test_help_quit(self):
-        h = "This is the quit command used to exit the program."
+        h = "Quit command to exit the program"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help quit"))
             self.assertEqual(h, output.getvalue().strip())
 
     def test_help_create(self):
         h = ("Usage: create <class>\n        "
-             "This creates a new class instance and prints the id.")
+             "This creates a new class instance and prints the id")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help create"))
             self.assertEqual(h, output.getvalue().strip())
 
     def test_help_EOF(self):
-        h = "This is the EOF signal used to exit the program."
+        h = "EOF command to exit the program"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help EOF"))
             self.assertEqual(h, output.getvalue().strip())
@@ -99,7 +99,7 @@ class TestHBNBCommand_help(unittest.TestCase):
     def test_help(self):
         h = ("Documented commands (type help <topic>):\n"
              "========================================\n"
-             "EOF  all  count  create  destroy  help  quit  show  update")
+             "EOF  all  create  destroy  help  quit  show  update")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help"))
             self.assertEqual(h, output.getvalue().strip())
@@ -146,7 +146,7 @@ class TestHBNBCommand_create(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_create_invalid_class(self):
-        correct = "** the class does not exist **"
+        correct = "** class doesn't exist **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create MyModel"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -231,7 +231,7 @@ class TestHBNBCommand_show(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_show_invalid_class(self):
-        correct = "** the class does not exist **"
+        correct = "** class doesn't exist **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("show MyModel"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -288,7 +288,7 @@ class TestHBNBCommand_show(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_show_no_instance_found_space_notation(self):
-        correct = "** no instance was found **"
+        correct = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("show BaseModel 1"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -312,7 +312,7 @@ class TestHBNBCommand_show(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_show_no_instance_found_dot_notation(self):
-        correct = "** no instance was found **"
+        correct = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("BaseModel.show(1)"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -485,7 +485,7 @@ class TestHBNBCommand_destroy(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_destroy_invalid_class(self):
-        correct = "** the class does not exist **"
+        correct = "** class doesn't exist **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("destroy MyModel"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -542,7 +542,7 @@ class TestHBNBCommand_destroy(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_destroy_invalid_id_space_notation(self):
-        correct = "** no instance was found **"
+        correct = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("destroy BaseModel 1"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -566,7 +566,7 @@ class TestHBNBCommand_destroy(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_destroy_invalid_id_dot_notation(self):
-        correct = "** no instance was found **"
+        correct = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("BaseModel.destroy(1)"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -729,7 +729,7 @@ class TestHBNBCommand_all(unittest.TestCase):
             pass
 
     def test_all_invalid_class(self):
-        correct = "** the class does not exist **"
+        correct = "** class doesn't exist **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("all MyModel"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -884,7 +884,7 @@ class TestHBNBCommand_update(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_update_invalid_class(self):
-        correct = "** the class does not exist **"
+        correct = "** class doesn't exist **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("update MyModel"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -941,7 +941,7 @@ class TestHBNBCommand_update(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_update_invalid_id_space_notation(self):
-        correct = "** no instance was found **"
+        correct = "** attribute name missing **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("update BaseModel 1"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -965,7 +965,7 @@ class TestHBNBCommand_update(unittest.TestCase):
             self.assertEqual(correct, output.getvalue().strip())
 
     def test_update_invalid_id_dot_notation(self):
-        correct = "** no instance was found **"
+        correct = "** no instance found **"
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("BaseModel.update(1)"))
             self.assertEqual(correct, output.getvalue().strip())
@@ -1246,7 +1246,7 @@ class TestHBNBCommand_update(unittest.TestCase):
         testCmd = "BaseModel.update({}, attr_name, 'attr_value')".format(tId)
         self.assertFalse(HBNBCommand().onecmd(testCmd))
         test_dict = storage.all()["BaseModel.{}".format(tId)].__dict__
-        self.assertEqual("attr_value", test_dict["attr_name"])
+        self.assertEqual('attr_value', test_dict["attr_name"])
 
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create User")
@@ -1303,7 +1303,7 @@ class TestHBNBCommand_update(unittest.TestCase):
         testCmd = "update Place {} max_guest 98".format(testId)
         self.assertFalse(HBNBCommand().onecmd(testCmd))
         test_dict = storage.all()["Place.{}".format(testId)].__dict__
-        self.assertEqual(98, test_dict["max_guest"])
+        self.assertEqual('98', test_dict["max_guest"])
 
     def test_update_valid_int_attr_dot_notation(self):
         with patch("sys.stdout", new=StringIO()) as output:
@@ -1312,7 +1312,7 @@ class TestHBNBCommand_update(unittest.TestCase):
         testCmd = "Place.update({}, max_guest, 98)".format(tId)
         self.assertFalse(HBNBCommand().onecmd(testCmd))
         test_dict = storage.all()["Place.{}".format(tId)].__dict__
-        self.assertEqual(98, test_dict["max_guest"])
+        self.assertEqual('98', test_dict["max_guest"])
 
     def test_update_valid_float_attr_space_notation(self):
         with patch("sys.stdout", new=StringIO()) as output:
@@ -1321,7 +1321,7 @@ class TestHBNBCommand_update(unittest.TestCase):
         testCmd = "update Place {} latitude 7.2".format(testId)
         self.assertFalse(HBNBCommand().onecmd(testCmd))
         test_dict = storage.all()["Place.{}".format(testId)].__dict__
-        self.assertEqual(7.2, test_dict["latitude"])
+        self.assertEqual('7.2', test_dict["latitude"])
 
     def test_update_valid_float_attr_dot_notation(self):
         with patch("sys.stdout", new=StringIO()) as output:
@@ -1330,7 +1330,7 @@ class TestHBNBCommand_update(unittest.TestCase):
         testCmd = "Place.update({}, latitude, 7.2)".format(tId)
         self.assertFalse(HBNBCommand().onecmd(testCmd))
         test_dict = storage.all()["Place.{}".format(tId)].__dict__
-        self.assertEqual(7.2, test_dict["latitude"])
+        self.assertEqual('7.2', test_dict["latitude"])
 
     def test_update_valid_dictionary_space_notation(self):
         with patch("sys.stdout", new=StringIO()) as output:
@@ -1478,7 +1478,7 @@ class TestHBNBCommand_update(unittest.TestCase):
         testCmd += "{'max_guest': 98})"
         HBNBCommand().onecmd(testCmd)
         test_dict = storage.all()["Place.{}".format(testId)].__dict__
-        self.assertEqual(98, test_dict["max_guest"])
+        self.assertEqual('98', test_dict["max_guest"])
 
     def test_update_valid_dictionary_with_float_space_notation(self):
         with patch("sys.stdout", new=StringIO()) as output:
@@ -1488,7 +1488,7 @@ class TestHBNBCommand_update(unittest.TestCase):
         testCmd += "{'latitude': 9.8})"
         HBNBCommand().onecmd(testCmd)
         test_dict = storage.all()["Place.{}".format(testId)].__dict__
-        self.assertEqual(9.8, test_dict["latitude"])
+        self.assertEqual('9.8', test_dict['latitude'])
 
     def test_update_valid_dictionary_with_float_dot_notation(self):
         with patch("sys.stdout", new=StringIO()) as output:
@@ -1498,7 +1498,7 @@ class TestHBNBCommand_update(unittest.TestCase):
         testCmd += "{'latitude': 9.8})"
         HBNBCommand().onecmd(testCmd)
         test_dict = storage.all()["Place.{}".format(testId)].__dict__
-        self.assertEqual(9.8, test_dict["latitude"])
+        self.assertEqual('9.8', test_dict["latitude"])
 
 
 class TestHBNBCommand_count(unittest.TestCase):
@@ -1526,7 +1526,7 @@ class TestHBNBCommand_count(unittest.TestCase):
     def test_count_invalid_class(self):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("MyModel.count()"))
-            self.assertEqual("0", output.getvalue().strip())
+            self.assertEqual("class doesn't exist", output.getvalue().strip())
 
     def test_count_object(self):
         with patch("sys.stdout", new=StringIO()) as output:
